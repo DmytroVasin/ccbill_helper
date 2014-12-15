@@ -1,3 +1,5 @@
+require "ccbill_helper"
+
 RSpec.configure do |config|
   
   config.expect_with :rspec do |expectations|
@@ -19,7 +21,7 @@ RSpec.configure do |config|
     config.default_formatter = 'doc'
   end
 
-  config.profile_examples = 10
+  # config.profile_examples = 10
 
   config.order = :random
 
