@@ -8,7 +8,7 @@ module CCBill
 
     DEFAULTS = {
       # account: config.account ...
-      currencyCode:   "USD",
+      currency_code:  "USD",
       initial_period: 30,
       rebills:        99,
       subaccount:     "0000"

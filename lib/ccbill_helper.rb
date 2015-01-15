@@ -1,13 +1,17 @@
 require "ccbill/version"
+require "ccbill/configuration"
 require "ccbill/dynamic_form"
-require "helpers/configuration"
 
 module CCBill
-  extend Configuration
+  class << self
+    attr_accessor :configuration
+  end
 
-  define_setting :account_number
-  define_setting :subaccount_number
-  define_setting :salt
+  def self.configuration
+    @configuration ||= Configuration.new
+  end
 
-  define_setting :default_currency, "USD"
+  def self.configure
+    yield(configuration)
+  end
 end
