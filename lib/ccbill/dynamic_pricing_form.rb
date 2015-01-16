@@ -21,7 +21,7 @@ module CCBill
     end
 
     def url
-      raise MissingFieldsError.new(errors.join(' ')) if !valid?
+      raise DynamicPricingError.new(errors.join(' ')) if !valid?
 
       mapped_fields = fields.map do |key, value|
         [ccbill_field(key), value]

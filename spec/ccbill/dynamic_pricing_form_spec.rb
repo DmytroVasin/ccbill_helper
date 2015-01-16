@@ -108,6 +108,11 @@ RSpec.describe CCBill::DynamicPricingForm do
   end
 
   describe "#url" do
-    it "should raise when missing fields"
+    it "should raise when missing fields" do
+      df = CCBill::DynamicPricingForm.new("aaa-123", {})
+      expect { df.url }.to raise_error(CCBill::DynamicPricingError)
+    end
+
+    it "builds the correct URL"
   end
 end
