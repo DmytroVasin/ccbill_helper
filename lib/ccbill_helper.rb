@@ -1,6 +1,6 @@
 require "ccbill/version"
 require "ccbill/configuration"
-require "ccbill/dynamic_form"
+require "ccbill/dynamic_pricing_form"
 
 module CCBill
   class << self

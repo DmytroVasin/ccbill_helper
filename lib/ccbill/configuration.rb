@@ -9,6 +9,7 @@ module CCBill
 
     def initialize
       @default_currency = "USD"
+      @subaccount = "0000"
     end
   end
 end
