@@ -1,6 +1,8 @@
 # https://www.ccbill.com/cs/wiki/tiki-index.php?page=Dynamic+Pricing
 
 module CCBill
+  class DynamicPricingError < StandardError; end
+
   class DynamicPricingForm
 
     attr_accessor :fields, :flexform_id
@@ -19,6 +21,8 @@ module CCBill
     end
 
     def url
+      raise MissingFieldsError.new(errors.join(' ')) if !valid?
+
       mapped_fields = fields.map do |key, value|
         [ccbill_field(key), value]
       end.to_h.merge("formDigest" => digest)
@@ -31,7 +35,7 @@ module CCBill
 
       required_fields.each do |reqd|
         if !fields[reqd]
-          @errors << "#{reqd} is required"
+          @errors << "#{reqd} is required."
         end
       end
 
@@ -43,6 +47,9 @@ module CCBill
         [
           fields[:initial_price],
           fields[:initial_period],
+          fields[:recurring_price],
+          fields[:recurring_period],
+          fields[:rebills],
           fields[:currency_code],
           CCBill.configuration.salt
         ]
@@ -50,9 +57,6 @@ module CCBill
         [
           fields[:initial_price],
           fields[:initial_period],
-          fields[:recurring_price],
-          fields[:recurring_period],
-          fields[:rebills],
           fields[:currency_code],
           CCBill.configuration.salt
         ]
@@ -62,7 +66,8 @@ module CCBill
     end
 
     def recurring?
-      fields[:recurring_price] || fields[:recurring_period]
+      # If you're gonna include one recurring field, you should include 'em all.
+      fields[:recurring_price] || fields[:recurring_period] || fields[:rebills]
     end
 
     private

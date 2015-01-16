@@ -79,8 +79,35 @@ RSpec.describe CCBill::DynamicPricingForm do
   end
 
   describe "#digest" do
-    it "returns salted md5 of field values" do
-      skip
+    
+    context "non-recurring" do
+      it "returns salted md5 of field values" do
+        CCBill.configure { |config| config.salt = "abc123" }
+        df = CCBill::DynamicPricingForm.new("aaa-123", {
+          initial_price: 1.23,
+          initial_period: 30
+        })
+        expect(df.digest).to eq Digest::MD5.hexdigest("1.2330USDabc123")
+      end
     end
+
+    context "recurring" do
+      it "returns salted md5 of field values" do
+        CCBill.configure { |config| config.salt = "abc123" }
+        df = CCBill::DynamicPricingForm.new("aaa-123", {
+          initial_price: 1.23,
+          initial_period: 30,
+          recurring_price: 1,
+          recurring_period: 10,
+          rebills: 99
+        })
+        
+        expect(df.digest).to eq Digest::MD5.hexdigest("1.233011099USDabc123")
+      end
+    end
+  end
+
+  describe "#url" do
+    it "should raise when missing fields"
   end
 end
