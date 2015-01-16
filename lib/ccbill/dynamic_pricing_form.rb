@@ -42,6 +42,8 @@ module CCBill
       @errors.empty?
     end
 
+    private
+
     def digest
       hashed_fields = if recurring?
         [
@@ -69,8 +71,6 @@ module CCBill
       # If you're gonna include one recurring field, you should include 'em all.
       fields[:recurring_price] || fields[:recurring_period] || fields[:rebills]
     end
-
-    private
 
     def required_fields
       req = [
