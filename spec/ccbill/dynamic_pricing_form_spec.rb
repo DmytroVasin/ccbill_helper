@@ -113,6 +113,26 @@ RSpec.describe CCBill::DynamicPricingForm do
       expect { df.url }.to raise_error(CCBill::DynamicPricingError)
     end
 
-    it "builds the correct URL"
+    it "points to the sandbox when in test mode" do
+      CCBill.configure { |config| config.mode = :test }
+      df = CCBill::DynamicPricingForm.new("aaa-123", {
+        initial_price: 1.23,
+        initial_period: 30
+      })
+
+      expect(df.url).to include("https://sandbox-api.ccbill.com")
+    end
+
+    it "points to the live server when not in test mode" do
+      CCBill.configure { |config| config.mode = :live }
+      df = CCBill::DynamicPricingForm.new("aaa-123", {
+        initial_price: 1.23,
+        initial_period: 30
+      })
+
+      expect(df.url).to include("https://api.ccbill.com")
+    end
+
+
   end
 end

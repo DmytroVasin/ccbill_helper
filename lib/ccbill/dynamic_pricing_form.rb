@@ -8,7 +8,9 @@ module CCBill
     attr_accessor :fields, :flexform_id
     attr_reader :errors
 
-    ENDPOINT = "https://api.ccbill.com/wap-frontflex/flexforms/"
+    TEST_ENDPOINT = "https://sandbox-api.ccbill.com/wap-frontflex/flexforms/"
+    LIVE_ENDPOINT = "https://api.ccbill.com/wap-frontflex/flexforms/"
+
 
     def initialize(flexform_id, fields)
       self.flexform_id = flexform_id
@@ -26,7 +28,7 @@ module CCBill
         [ccbill_field(key), value]
       end.to_h.merge("formDigest" => digest)
 
-      ENDPOINT + "#{flexform_id}?" + URI.encode_www_form(mapped_fields)
+      endpoint + "#{flexform_id}?" + URI.encode_www_form(mapped_fields)
     end
 
     def valid?
@@ -101,6 +103,10 @@ module CCBill
         rebills:          "numRebills",
         form_digest:      "formDigest"
       }[internal]
+    end
+
+    def endpoint
+      CCBill.configuration.test? ? TEST_ENDPOINT : LIVE_ENDPOINT
     end
 
 
