@@ -13,7 +13,6 @@ module CCBill
     def initialize(flexform_id, fields)
       self.flexform_id = flexform_id
       self.fields = {
-          account:        CCBill.configuration.account,
           subaccount:     CCBill.configuration.subaccount || "0000",
           currency_code:  "USD"
         }.merge(fields)
@@ -34,9 +33,7 @@ module CCBill
       @errors = []
 
       required_fields.each do |reqd|
-        if !fields[reqd]
-          @errors << "#{reqd} is required."
-        end
+        @errors << "#{reqd} is required." if !fields[reqd]
       end
 
       @errors.empty?
@@ -74,7 +71,6 @@ module CCBill
 
     def required_fields
       req = [
-        :account,
         :subaccount,
         :initial_price,
         :initial_period,
