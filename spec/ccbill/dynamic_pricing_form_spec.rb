@@ -87,7 +87,7 @@ RSpec.describe CCBill::DynamicPricingForm do
           initial_price: 1.23,
           initial_period: 30
         })
-        expect(df.send(:digest)).to eq Digest::MD5.hexdigest("1.2330USDabc123")
+        expect(df.send(:digest)).to eq Digest::MD5.hexdigest("1.2330840abc123")
       end
     end
 
@@ -102,7 +102,7 @@ RSpec.describe CCBill::DynamicPricingForm do
           rebills: 99
         })
 
-        expect(df.send(:digest)).to eq Digest::MD5.hexdigest("1.233011099USDabc123")
+        expect(df.send(:digest)).to eq Digest::MD5.hexdigest("1.233011099840abc123")
       end
     end
   end

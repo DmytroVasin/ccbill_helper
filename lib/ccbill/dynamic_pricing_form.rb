@@ -16,8 +16,8 @@ module CCBill
     def initialize(flexform_id, fields)
       self.flexform_id = flexform_id
       self.fields = {
-          subaccount:     CCBill.configuration.subaccount || "0000",
-          currency_code:  "USD"
+          subaccount:     CCBill.configuration.subaccount,
+          currency_code:  CCBill.configuration.default_currency
         }.merge(fields)
       @errors = []
     end

@@ -9,7 +9,7 @@ module CCBill
     attr_accessor :mode
 
     def initialize
-      @default_currency = 840 # USD
+      @default_currency = "840" # USD
       @subaccount = "0000"
       @mode = :test
     end
