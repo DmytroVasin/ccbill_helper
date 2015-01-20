@@ -8,6 +8,7 @@ module CCBill
     attr_accessor :fields, :flexform_id
     attr_reader :errors
 
+    # You gotta be logged in to the CCBill admin to be able to see your forms in the sandbox.
     TEST_ENDPOINT = "https://sandbox-api.ccbill.com/wap-frontflex/flexforms/"
     LIVE_ENDPOINT = "https://api.ccbill.com/wap-frontflex/flexforms/"
 
@@ -26,7 +27,9 @@ module CCBill
 
       mapped_fields = fields.map do |key, value|
         [ccbill_field(key), value]
-      end.to_h.merge("formDigest" => digest)
+      end
+
+      mapped_fields = Hash[mapped_fields].merge("formDigest" => digest)
 
       endpoint + "#{flexform_id}?" + URI.encode_www_form(mapped_fields)
     end
