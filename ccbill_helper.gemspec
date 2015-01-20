@@ -8,9 +8,9 @@ Gem::Specification.new do |spec|
   spec.version       = CCBill::VERSION
   spec.authors       = ["Aaron Klaassen"]
   spec.email         = ["aaron.klaassen@outerspacehero.com"]
-  spec.summary       = %q{TODO: Write a short summary. Required.}
-  spec.description   = %q{TODO: Write a longer description. Optional.}
-  spec.homepage      = ""
+  spec.summary       = %q{Helpers for interacting with CCBill.}
+  spec.description   = %q{Helpers and wrappers for CCBill's often archaic or poorly-documented API's.}
+  spec.homepage      = "https://github.com/aaronklaassen/ccbill_helper/"
   spec.license       = "MIT"
 
   spec.files         = `git ls-files -z`.split("\x0")
