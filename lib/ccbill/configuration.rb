@@ -6,6 +6,9 @@ module CCBill
     attr_accessor :salt
     attr_accessor :default_currency
 
+    attr_accessor :datalink_username
+    attr_accessor :datalink_password
+
     attr_accessor :mode
 
     def initialize

@@ -1,4 +1,5 @@
-require 'pry'
+require 'csv'
+require 'faraday'
 
 module CCBill
   class DataLinkError < StandardError; end
@@ -66,15 +67,8 @@ module CCBill
       # The order of the params is settable in the admin,
       # but there is a default. Have to make that configurable here, too.
       # Errors start with "Error:"
-
-    attr_writer :test
  
-    def initialize(test = true)
-      @test = test
-    end
-
-    def test?
-      @test
+    def initialize
     end
 
     def transactions(start_time, end_time, txn_types)
@@ -98,9 +92,9 @@ module CCBill
         startTime:        formatted_time(start_time),
         endTime:          formatted_time(end_time),
         transactionTypes: txn_types.join(","),
-        username:         CCBill.configuration.datalink.username,
-        password:         CCBill.configuration.datalink.password,
-        testMode:         test? ? "1" : "0"
+        username:         CCBill.configuration.datalink_username,
+        password:         CCBill.configuration.datalink_password,
+        testMode:         CCBill.configuration.test? ? "1" : "0"
         # TODO: account numbers
       }
     end
@@ -135,7 +129,8 @@ module CCBill
     end
 
     def fields(txn_type)
-      CCBill.configuration.datalink.field_list[txn_type] || FIELD_LIST_DEFAULTS[txn_type]
+      # CCBill.configuration.datalink.field_list[txn_type]
+      FIELD_LIST_DEFAULTS[txn_type]
     end
   end
 end
