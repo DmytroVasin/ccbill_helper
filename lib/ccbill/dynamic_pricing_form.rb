@@ -104,7 +104,10 @@ module CCBill
         recurring_price:  "recurringPrice",
         recurring_period: "recurringPeriod",
         rebills:          "numRebills",
-        form_digest:      "formDigest"
+        form_digest:      "formDigest",
+        username:         "username",
+        password:         "password",
+        email:            "email"
       }[internal]
     end
 
