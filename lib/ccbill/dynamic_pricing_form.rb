@@ -13,12 +13,13 @@ module CCBill
     LIVE_ENDPOINT = "https://api.ccbill.com/wap-frontflex/flexforms/"
 
 
-    def initialize(flexform_id, fields)
+    def initialize(flexform_id, fields = {})
       self.flexform_id = flexform_id
       self.fields = {
           subaccount:     CCBill.configuration.subaccount,
           currency_code:  CCBill.configuration.default_currency
         }.merge(fields)
+      # TODO: make sure the prices are formatted to x.xx.
       @errors = []
     end
 
@@ -108,7 +109,7 @@ module CCBill
         username:         "username",
         password:         "password",
         email:            "email"
-      }[internal]
+      }[internal] || internal
     end
 
     def endpoint
