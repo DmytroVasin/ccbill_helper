@@ -113,7 +113,11 @@ module CCBill
     end
 
     def endpoint
-      CCBill.configuration.test? ? TEST_ENDPOINT : LIVE_ENDPOINT
+      if CCBill.configuration.test?
+        CCBill.configuration.test_endpoint || TEST_ENDPOINT
+      else
+        LIVE_ENDPOINT
+      end
     end
 
 

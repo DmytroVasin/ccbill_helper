@@ -10,6 +10,7 @@ module CCBill
     attr_accessor :datalink_password
 
     attr_accessor :mode
+    attr_accessor :test_endpoint
 
     def initialize
       @default_currency = "840" # USD
