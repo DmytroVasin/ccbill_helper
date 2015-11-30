@@ -19,7 +19,7 @@ module CCBill
     end
 
     def test?
-      mode == :test
+      mode.to_sym == :test
     end
   end
 end
